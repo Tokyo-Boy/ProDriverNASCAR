@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Experience | Pro Driver NASCAR Experience</title>
+    <style>
+        /* Modern Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --racing-red: #ff3e3e;
+            --racing-red-hover: #cc2424;
+            --bg-dark: #0a0a0a;
+            --card-dark: #141414;
+            --border-color: #222222;
+            --text-gray: #aaaaaa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+            padding-top: 80px; /* Offset for fixed header */
+        }
+
+        /* Navigation Bar Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--racing-red);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #cccccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--racing-red);
+        }
+
+        .cta-nav-btn {
+            background-color: var(--racing-red);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 700;
+            transition: background 0.3s ease;
+        }
+
+        .cta-nav-btn:hover {
+            background-color: var(--racing-red-hover);
+            color: #fff;
+        }
+
+        /* Hamburger Menu Icon */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hamburger .bar {
+            width: 28px;
+            height: 3px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        /* Page Header Banner */
+        .page-banner {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(10,10,10,1)), url('images/racing33.png') no-repeat center center/cover;
+            padding: 100px 20px 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .banner-title {
+            font-size: 48px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+        }
+
+        .banner-title span {
+            color: var(--racing-red);
+        }
+
+        .banner-subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Split Contact & Booking Layout */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Information Column */
+        .info-panel h2 {
+            font-size: 32px;
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .info-panel p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .detail-icon {
+            font-size: 24px;
+            color: var(--racing-red);
+            background-color: rgba(255, 62, 62, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            line-height: 1;
+        }
+
+        .detail-text h4 {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--text-gray);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .detail-text p {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 0;
+            font-weight: 600;
+        }
+
+        /* Booking Registration Form */
+        .booking-form-wrap {
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            padding: 45px;
+            border-radius: 8px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #dddddd;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            background-color: #0a0a0a;
+            border: 1px solid var(--border-color);
+            padding: 14px;
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+            width: 100%;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--racing-red);
+        }
+
+        .submit-btn {
+            background-color: var(--racing-red);
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--racing-red-hover);
+        }
+
+        /* FAQ Section Accordion Component Layout */
+        .faq-section {
+            background-color: #070707;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 100px 20px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+        }
+
+        .faq-title span {
+            color: var(--racing-red);
+        }
+
+        .faq-item {
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .faq-trigger {
+            width: 100%;
+            padding: 24px;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            text-align: left;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-icon {
+            color: var(--racing-red);
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 24px;
+        }
+
+        .faq-panel p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            padding-bottom: 24px;
+            font-size: 15px;
+        }
+
+        /* Accordion Active States controlled via JS toggles */
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-item.active .faq-panel {
+            max-height: 200px;
+        }
+
+        /* Modern Footer Section */
+        footer {
+            background-color: #050505;
+            border-top: 1px solid var(--border-color);
+            padding: 80px 20px 30px 20px;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand h3 span {
+            color: var(--racing-red);
+        }
+
+        .footer-brand p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            max-width: 320px;
+        }
+
+        .footer-links h4 {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 15px;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--racing-red);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: #666666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--text-gray);
+        }
+
+        /* Responsive Mobile Layout Breakpoint */
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--bg-dark);
+                flex-direction: column;
+                justify-content: flex-start;
+                gap: 40px;
+                padding-top: 60px;
+                transition: left 0.4s cubic-bezier(0.1, 1, 0.1, 1);
+                border-top: 1px solid var(--border-color);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                font-size: 20px;
+            }
+
+            .page-banner {
+                padding: 60px 20px 40px 20px;
+            }
+
+            .banner-title {
+                font-size: 32px;
+            }
+
+            .booking-form-wrap {
+                padding: 25px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-group.full-width {
+                grid-column: auto;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">PRO<span>DRIVER</span></a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="tracks.html" class="nav-link">Tracks</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="contact.html" class="cta-nav-btn">Book Experience</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main>
+        <!-- Page Header Banner -->
+        <section class="page-banner">
+            <h1 class="banner-title">Start Your <span>Program</span></h1>
+            <p class="banner-subtitle">Submit your operational details below to reserve a chassis position or request track-specific schedule logs.</p>
+        </section>
+
+        <!-- Split Layout Form & Details -->
+        <section class="contact-container">
+            <div class="info-panel">
+                <h2>Trackside HQ</h2>
+                <p>Have questions regarding structural clearance parameters, driver suit metric requirements, or private corporate track buyouts? Our administrative team responds within a 24-hour log period.</p>
+                
+                <div class="contact-details">
+                    <div class="detail-item">
+                        <div class="detail-icon">📞</div>
+                        <div class="detail-text">
+                            <h4>Direct Hotline</h4>
+                            <p>1-800-555-RACE</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">✉️</div>
+                        <div class="detail-text">
+                            <h4>Operations Email</h4>
+                            <p>pitcommand@pro-driver.com</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">📍</div>
+                        <div class="detail-text">
+                            <h4>Central Grid Hub</h4>
+                            <p>Daytona Speed Boulevard, FL</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="booking-form-wrap">
+                <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Session Registration Logged!');">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="programTier">Select Program Track</label>
+                        <select id="programTier" required>
+                            <option value="" disabled selected>Choose your experience level</option>
+                            <option value="rookie">Step 01: The Rookie Experience (8 Laps)</option>
+                            <option value="qualifier">Step 02: The Qualifier Track (18 Laps)</option>
+                            <option value="custom">Custom Team Building / Corporate Track Out</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="trackSelect">Target Oval Location</label>
+                        <select id="trackSelect" required>
+                            <option value="" disabled selected>Choose a track location</option>
+                            <option value="daytona">Daytona International Oval</option>
+                            <option value="talladega">Talladega Run Circuit</option>
+                            <option value="bristol">Bristol Thunder Bowl</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="notes">Special Requirements / Driver Height & Weight Notes</label>
+                        <textarea id="notes" rows="4"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Transmit Booking Request</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Interactive Accordion FAQ Section -->
+        <section class="faq-section">
+            <div class="faq-container">
+                <h2 class="faq-title">Registration <span>FAQ</span></h2>
+                
+                <div class="faq-item">
+                    <button class="faq-trigger">Do I need a manual clutch license to operate? <span class="faq-icon">+</span></button>
+                    <div class="faq-panel">
+                        <p>No prior competitive manual training is needed. Our program staff assists with launching from the pit lane boxes, and modern track parameters allow you to remain safely in high gear once running on the oval loops.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-trigger">What happens in the event of rainfall? <span class="faq-icon">+</span></button>
+                    <div class="faq-panel">
+                        <p>NASCAR stock slick compounds cannot safely navigate high-angle banking in wet metrics. If rain causes track operations to hold, your system parameters will be immediately rescheduled to an open backup date at no extra charge.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-trigger">Are there size restrictions for inside the roll cage? <span class="faq-icon">+</span></button>
+                    <div class="faq-panel">
+                        <p>Because these are true structural racing cockpits requiring entry through the window space, drivers generally must be between 5'0" and 6'5" tall, with a maximum weight ceiling of approximately 290 lbs for standard safety seat harnesses.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modern Responsive Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>PRO<span>DRIVER</span></h3>
+                <p>Building specialized performance programs that open track access lanes for aspiring enthusiasts and student drivers alike.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="tracks.html">Tracks</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Book Session</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Tracks</h4>
+                <ul>
+                    <li><a href="tracks.html">Daytona Track Area</a></li>
+                    <li><a href="tracks.html">Talladega Run</a></li>
+                    <li><a href="tracks.html">Bristol Speedway</a></li>
+                    <li><a href="tracks.html">Charlotte Oval</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Hub</a></li>
+                    <li><a href="about.html">Safety Directives</a></li>
+                    <li><a href="contact.html">FAQ System</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Pro Driver NASCAR Experience. All track rules enforced.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Protocol</a>
+                <a href="#">Terms of Use</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Navigation & Accordion Logic Scripts -->
+    <script>
+        // Mobile Navigation Hamburger Logic
+        const hamburger = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // FAQ Interactive Accordion Action Toggle
+        const faqTriggers = document.querySelectorAll('.faq-trigger');
+
+        faqTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const parentItem = trigger.parentElement;
+                
+                // Toggle active visibility state
+                parentItem.classList.toggle('active');
+                
+                // Close other panels cleanly if one opens
+                faqTriggers.forEach(otherTrigger => {
+                    if (otherTrigger !== trigger) {
+                        otherTrigger.parentElement.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

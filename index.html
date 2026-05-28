@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Driver NASCAR | Student Driver Experience</title>
+    <style>
+        /* Modern Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --racing-red: #ff3e3e;
+            --racing-red-hover: #cc2424;
+            --bg-dark: #0a0a0a;
+            --card-dark: #141414;
+            --border-color: #222222;
+            --text-gray: #aaaaaa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+            padding-top: 80px; /* Offset for fixed header */
+        }
+
+        /* Navigation Bar Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--racing-red);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #cccccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--racing-red);
+        }
+
+        .cta-nav-btn {
+            background-color: var(--racing-red);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 700;
+            transition: background 0.3s ease;
+        }
+
+        .cta-nav-btn:hover {
+            background-color: var(--racing-red-hover);
+            color: #fff;
+        }
+
+        /* Hamburger Menu Icon */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hamburger .bar {
+            width: 28px;
+            height: 3px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: calc(100vh - 80px);
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            /* Background Settings using image1.jpg (racing33.png) */
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(10,10,10,1)), url('images/racing33.png') no-repeat center center/cover;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 10;
+        }
+
+        .hero-badge {
+            background-color: rgba(255, 62, 62, 0.2);
+            border: 1px solid var(--racing-red);
+            color: var(--racing-red);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .hero-description {
+            font-size: 20px;
+            color: #dddddd;
+            margin-bottom: 40px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 36px;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--racing-red);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--racing-red-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            border: 2px solid #fff;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #fff;
+            color: var(--bg-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Section Layout Presets */
+        section.section-padding {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 40px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header h2 span {
+            color: var(--racing-red);
+        }
+
+        .section-header p {
+            color: var(--text-gray);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Program Summary Feature Section */
+        .features {
+            margin: -60px auto 40px auto;
+            position: relative;
+            z-index: 20;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+        }
+
+        .feature-card {
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            padding: 40px 30px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--racing-red);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            color: var(--racing-red);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            line-height: 1.5;
+        }
+
+        /* Dynamic Program Steps Section */
+        .program-tier-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .tier-card {
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #fff;
+            color: #000;
+            font-weight: 800;
+            padding: 4px 12px;
+            font-size: 12px;
+            text-transform: uppercase;
+            border-radius: 4px;
+        }
+
+        .tier-content {
+            padding: 40px;
+            flex-grow: 1;
+        }
+
+        .tier-step {
+            color: var(--racing-red);
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .tier-title {
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .tier-desc {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .tier-features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .tier-features-list li {
+            margin-bottom: 12px;
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+
+        .tier-features-list li::before {
+            content: "✓";
+            color: var(--racing-red);
+            font-weight: bold;
+        }
+
+        .tier-action {
+            padding: 0 40px 40px 40px;
+        }
+
+        .tier-btn {
+            width: 100%;
+            text-align: center;
+            background-color: transparent;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .tier-btn:hover {
+            border-color: var(--racing-red);
+            background-color: var(--racing-red);
+        }
+
+        /* Fleet Showroom Section */
+        .fleet-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 50px;
+        }
+
+        .fleet-info {
+            flex: 1;
+        }
+
+        .fleet-info h3 {
+            font-size: 32px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .fleet-info p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .spec-item {
+            border-left: 3px solid var(--racing-red);
+            padding-left: 15px;
+        }
+
+        .spec-label {
+            font-size: 12px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .spec-value {
+            font-size: 20px;
+            font-weight: 800;
+            margin-top: 20px;
+        }
+
+        /* Modern Footer Section */
+        footer {
+            background-color: #050505;
+            border-top: 1px solid var(--border-color);
+            padding: 80px 20px 30px 20px;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand h3 span {
+            color: var(--racing-red);
+        }
+
+        .footer-brand p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            max-width: 320px;
+        }
+
+        .footer-links h4 {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 15px;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--racing-red);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: #666666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--text-gray);
+        }
+
+        /* Responsive Mobile Layout Breakpoint */
+        @media (max-width: 992px) {
+            .fleet-container {
+                flex-direction: column;
+                padding: 30px;
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--bg-dark);
+                flex-direction: column;
+                justify-content: flex-start;
+                gap: 40px;
+                padding-top: 60px;
+                transition: left 0.4s cubic-bezier(0.1, 1, 0.1, 1);
+                border-top: 1px solid var(--border-color);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                font-size: 20px;
+            }
+
+            .hero {
+                height: auto;
+                padding: 100px 20px;
+            }
+
+            .hero-title {
+                font-size: 40px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .features {
+                margin-top: 40px;
+            }
+
+            .section-header h2 {
+                font-size: 30px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">PRO<span>DRIVER</span></a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="tracks.html" class="nav-link">Tracks</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="contact.html" class="nav-link cta-nav-btn">Book Experience</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main>
+        <!-- Hero Banner Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-badge">Authentic Stock Car Academy</span>
+                <h1 class="hero-title">Stop Watching.<br>Start Driving.</h1>
+                <p class="hero-description">Get behind the wheel of a real high-horsepower stock car. No riding shotgun, no simulated screens—just you, the asphalt, and professional instruction to guide your journey from student to racer.</p>
+                <div class="btn-group">
+                    <a href="contact.html" class="btn btn-primary">Book Your Session</a>
+                    <a href="tracks.html" class="btn btn-secondary">Explore Tracks</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fast Program Intro Feature Blocks -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🏎️</div>
+                <h3>Real Racing Machinery</h3>
+                <p>Train inside purpose-built, full-spec stock cars fitted with advanced safety roll cages and true V8 engines.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏁</div>
+                <h3>1-on-1 Spotter Coaching</h3>
+                <p>Learn track positioning, acceleration thresholds, and real racing lines via continuous radio communication with our pros.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏱️</div>
+                <h3>Graduate To Passing</h3>
+                <p>Advance past the foundational course and qualify for high-speed passing sessions alongside field drivers.</p>
+            </div>
+        </section>
+
+        <!-- Dynamic Program Tiers Section -->
+        <section class="section-padding" id="programs">
+            <div class="section-header">
+                <h2>The Student Driver <span>Journey</span></h2>
+                <p>Select your entry point. No prior competitive tracking experience required to begin step one.</p>
+            </div>
+            <div class="program-tier-grid">
+                <!-- Tier 1 -->
+                <div class="tier-card">
+                    <span class="tier-badge">Popular</span>
+                    <div class="tier-content">
+                        <div class="tier-step">Step 01</div>
+                        <h3 class="tier-title">The Rookie Experience</h3>
+                        <p class="tier-desc">Perfect for beginners looking to break past speed limits and feel the raw structural pull of a stock car layout.</p>
+                        <ul class="tier-features-list">
+                            <li>8 Full Track Laps</li>
+                            <li>Pre-drive Safety Training</li>
+                            <li>Electronic Driving Suit & Helmet Rental</li>
+                            <li>1-on-1 Spotter Radio System</li>
+                        </ul>
+                    </div>
+                    <div class="tier-action">
+                        <a href="contact.html" class="tier-btn">Register Experience</a>
+                    </div>
+                </div>
+
+                <!-- Tier 2 -->
+                <div class="tier-card">
+                    <div class="tier-content">
+                        <div class="tier-step">Step 02</div>
+                        <h3 class="tier-title">The Qualifier Track</h3>
+                        <p class="tier-desc">Deepen your skills with secondary tier extended sessions focused on consistent lap speed mapping.</p>
+                        <ul class="tier-features-list">
+                            <li>18 Laps Split Into Double Sessions</li>
+                            <li>Advanced Line Selection Training</li>
+                            <li>Telemetry Speed Log Breakdowns</li>
+                            <li>Passing Approval Qualification Check</li>
+                        </ul>
+                    </div>
+                    <div class="tier-action">
+                        <a href="contact.html" class="tier-btn">Register Experience</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fleet Grid Component Section -->
+        <section class="section-padding" style="background-color: #070707; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+            <div class="section-header">
+                <h2>The <span>Fleet</span></h2>
+                <p>You drive authentic structural steel chassis racecars tuned to exact specifications.</p>
+            </div>
+            <div class="fleet-container">
+                <div class="fleet-info">
+                    <h3>Late Model Spec V8</h3>
+                    <p>Our training fleet consists of track-prepared stock cars stripped down to raw utility. Fiberglass panels cover structured safety steel, placing an emphasis on high downforce cornering and immediate response curves.</p>
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <div class="spec-label">Engine Architecture</div>
+                            <div class="spec-value">Custom Built V8</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Power Out</div>
+                            <div class="spec-value">500+ Horsepower</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Transmission</div>
+                            <div class="spec-value">4-Speed Manual</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Chassis Spec</div>
+                            <div class="spec-value">Full Safety Roll Cage</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modern Responsive Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>PRO<span>DRIVER</span></h3>
+                <p>Building specialized performance programs that open track access lanes for aspiring enthusiasts and student drivers alike.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="tracks.html">Tracks</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Book Session</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Tracks</h4>
+                <ul>
+                    <li><a href="tracks.html">Daytona Track Area</a></li>
+                    <li><a href="tracks.html">Talladega Run</a></li>
+                    <li><a href="tracks.html">Bristol Speedway</a></li>
+                    <li><a href="tracks.html">Charlotte Oval</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Hub</a></li>
+                    <li><a href="about.html">Safety Directives</a></li>
+                    <li><a href="contact.html">FAQ System</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Pro Driver NASCAR Experience. All track rules enforced.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Protocol</a>
+                <a href="#">Terms of Use</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation Logic -->
+    <script>
+        const hamburger = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Our Academy | Pro Driver NASCAR Experience</title>
+    <style>
+        /* Modern Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --racing-red: #ff3e3e;
+            --racing-red-hover: #cc2424;
+            --bg-dark: #0a0a0a;
+            --card-dark: #141414;
+            --border-color: #222222;
+            --text-gray: #aaaaaa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+            padding-top: 80px; /* Offset for fixed header */
+        }
+
+        /* Navigation Bar Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--racing-red);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #cccccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--racing-red);
+        }
+
+        .cta-nav-btn {
+            background-color: var(--racing-red);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 700;
+            transition: background 0.3s ease;
+        }
+
+        .cta-nav-btn:hover {
+            background-color: var(--racing-red-hover);
+            color: #fff;
+        }
+
+        /* Hamburger Menu Icon */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hamburger .bar {
+            width: 28px;
+            height: 3px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        /* Page Header Banner */
+        .page-banner {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(10,10,10,1)), url('images/hero.webp') no-repeat center center/cover;
+            padding: 120px 20px 80px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .banner-title {
+            font-size: 48px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+        }
+
+        .banner-title span {
+            color: var(--racing-red);
+        }
+
+        .banner-subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Split Story Layout Sections */
+        .about-section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .story-block {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 100px;
+        }
+
+        .story-block:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .story-image-wrap {
+            flex: 1;
+            position: relative;
+        }
+
+        .story-image-wrap img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: block;
+        }
+
+        /* Decorative red border frame for visual polish */
+        .story-image-wrap::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--racing-red);
+            border-radius: 8px;
+            z-index: -1;
+        }
+
+        .story-text {
+            flex: 1;
+        }
+
+        .story-tag {
+            color: var(--racing-red);
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .story-text h2 {
+            font-size: 36px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .story-text p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Numeric Stat Counter Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .stat-number {
+            font-size: 40px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .stat-number span {
+            color: var(--racing-red);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Modern Footer Section */
+        footer {
+            background-color: #050505;
+            border-top: 1px solid var(--border-color);
+            padding: 80px 20px 30px 20px;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand h3 span {
+            color: var(--racing-red);
+        }
+
+        .footer-brand p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            max-width: 320px;
+        }
+
+        .footer-links h4 {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 15px;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--racing-red);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: #666666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--text-gray);
+        }
+
+        /* Responsive Mobile Layout Breakpoint */
+        @media (max-width: 992px) {
+            .story-block, .story-block:nth-child(even) {
+                flex-direction: column;
+                gap: 40px;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px 20px;
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--bg-dark);
+                flex-direction: column;
+                justify-content: flex-start;
+                gap: 40px;
+                padding-top: 60px;
+                transition: left 0.4s cubic-bezier(0.1, 1, 0.1, 1);
+                border-top: 1px solid var(--border-color);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                font-size: 20px;
+            }
+
+            .page-banner {
+                padding: 80px 20px 40px 20px;
+            }
+
+            .banner-title {
+                font-size: 32px;
+            }
+
+            .story-text h2 {
+                font-size: 28px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">PRO<span>DRIVER</span></a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="tracks.html" class="nav-link">Tracks</a></li>
+                <li><a href="about.html" class="nav-link active">About Us</a></li>
+                <li><a href="contact.html" class="nav-link cta-nav-btn">Book Experience</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main>
+        <!-- Page Header Banner using image4.jpg (hero.webp) -->
+        <section class="page-banner">
+            <h1 class="banner-title">Behind The <span>Chassis</span></h1>
+            <p class="banner-subtitle">We remove the barrier between race fans and the concrete oval. Discover our origin, our elite trackside safety mission, and our philosophy.</p>
+        </section>
+
+        <!-- Narrative Blocks Section -->
+        <section class="about-section">
+            
+            <!-- Story Block 1 featuring image4.jpg (hero.webp) verbatim reference -->
+            <div class="story-block">
+                <div class="story-image-wrap">
+                    <img src="images/hero.webp" alt="Race car being unloaded from hauler">
+                </div>
+                <div class="story-text">
+                    <span class="story-tag">Our Mission Philosophy</span>
+                    <h2>From Hauler Trailer to Green Flag Grid Lines</h2>
+                    <p>Pro Driver NASCAR Academy was established to solve a singular issue: traditional driving experiences kept enthusiasts contained behind safe pacing vehicles or strictly limited simulation displays. We believed that true learning only happens when you handle real, unfiltered mechanical feedback yourself.</p>
+                    <p>Our operation controls a professional log system, deploying transporters, custom gear suites, and elite telemetry mapping tools directly to tracks so your experience matches the infrastructure of a competitive motorsports weekend.</p>
+                </div>
+            </div>
+
+            <!-- Story Block 2 featuring image2.jpg (Racer22.png) verbatim reference -->
+            <div class="story-block">
+                <div class="story-image-wrap">
+                    <img src="images/Racer22.png" alt="Stock car stationed in pit lane ready for student driving">
+                </div>
+                <div class="story-text">
+                    <span class="story-tag">Track Operations Protocol</span>
+                    <h2>Real Pit Lanes. Dedicated Pit Command Units.</h2>
+                    <p>Our program operates directly out of active professional stock car pits. Before you open up throttle columns on the straights, you train face-to-face with veteran spotters right where legendary endurance records are built.</p>
+                    <p>Every track-side vehicle we keep active undergoes rigid checks to verify frame stability, brake lines, and roll structures before your green flag session ever activates. You drop into custom racing harnesses and receive continuous, active steering adjustments via live radio feeds as you circle the oval banks.</p>
+                </div>
+            </div>
+
+            <!-- Quantitative Summary Dashboard Counters -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">45k<span>+</span></div>
+                    <div class="stat-label">Student Track Laps Logged</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">500<span>+</span></div>
+                    <div class="stat-label">True Dyno Horsepower</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100<span>%</span></div>
+                    <div class="stat-label">Live Spotter Radio Coached</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">0<span></span></div>
+                    <div class="stat-label">Simulator Screen Mirrors</div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Modern Responsive Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>PRO<span>DRIVER</span></h3>
+                <p>Building specialized performance programs that open track access lanes for aspiring enthusiasts and student drivers alike.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="tracks.html">Tracks</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Book Session</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Tracks</h4>
+                <ul>
+                    <li><a href="tracks.html">Daytona Track Area</a></li>
+                    <li><a href="tracks.html">Talladega Run</a></li>
+                    <li><a href="tracks.html">Bristol Speedway</a></li>
+                    <li><a href="tracks.html">Charlotte Oval</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Hub</a></li>
+                    <li><a href="about.html">Safety Directives</a></li>
+                    <li><a href="contact.html">FAQ System</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Pro Driver NASCAR Experience. All track rules enforced.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Protocol</a>
+                <a href="#">Terms of Use</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation Logic -->
+    <script>
+        const hamburger = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

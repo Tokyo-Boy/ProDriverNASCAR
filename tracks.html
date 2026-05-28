@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Tracks | Pro Driver NASCAR Experience</title>
+    <style>
+        /* Modern Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --racing-red: #ff3e3e;
+            --racing-red-hover: #cc2424;
+            --bg-dark: #0a0a0a;
+            --card-dark: #141414;
+            --border-color: #222222;
+            --text-gray: #aaaaaa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+            padding-top: 80px; /* Offset for fixed header */
+        }
+
+        /* Navigation Bar Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--racing-red);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #cccccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--racing-red);
+        }
+
+        .cta-nav-btn {
+            background-color: var(--racing-red);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 700;
+            transition: background 0.3s ease;
+        }
+
+        .cta-nav-btn:hover {
+            background-color: var(--racing-red-hover);
+            color: #fff;
+        }
+
+        /* Hamburger Menu Icon */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hamburger .bar {
+            width: 28px;
+            height: 3px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        /* Page Header Banner */
+        .page-banner {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(10,10,10,1)), url('images/Racer22.png') no-repeat center center/cover;
+            padding: 100px 20px 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .banner-title {
+            font-size: 48px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+        }
+
+        .banner-title span {
+            color: var(--racing-red);
+        }
+
+        .banner-subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Main Section Padding */
+        .section-padding {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Grid Layout for Tracks */
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .track-card {
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .track-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--racing-red);
+        }
+
+        .track-img-placeholder {
+            height: 220px;
+            background-color: #1a1a1a;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Visual wireframe overlay to give an engineering/racing track aesthetic */
+        .track-img-placeholder::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 62, 62, 0.05) 25%, transparent 25%), 
+                        linear-gradient(-45deg, rgba(255, 62, 62, 0.05) 25%, transparent 25%);
+            background-size: 20px 20px;
+        }
+
+        .track-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--racing-red);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .track-layout-icon {
+            font-size: 70px;
+            z-index: 1;
+            filter: grayscale(30%);
+        }
+
+        .track-content {
+            padding: 30px;
+            flex-grow: 1;
+        }
+
+        .track-name {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .track-location {
+            font-size: 14px;
+            color: var(--racing-red);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+        }
+
+        .track-desc {
+            color: var(--text-gray);
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* Track Tech Specs Table info inside card */
+        .track-specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            border-top: 1px solid #222;
+            padding-top: 20px;
+        }
+
+        .track-spec-box .label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .track-spec-box .value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .track-action {
+            padding: 0 30px 30px 30px;
+        }
+
+        .track-btn {
+            width: 100%;
+            text-align: center;
+            background-color: transparent;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .track-btn:hover {
+            background-color: #fff;
+            color: var(--bg-dark);
+            border-color: #fff;
+        }
+
+        /* Bottom Notice Box Section */
+        .safety-notice-box {
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--racing-red);
+            border-radius: 4px;
+            padding: 30px;
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .notice-icon {
+            font-size: 36px;
+        }
+
+        .notice-text h4 {
+            font-size: 18px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .notice-text p {
+            color: var(--text-gray);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* Modern Footer Section */
+        footer {
+            background-color: #050505;
+            border-top: 1px solid var(--border-color);
+            padding: 80px 20px 30px 20px;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand h3 span {
+            color: var(--racing-red);
+        }
+
+        .footer-brand p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            max-width: 320px;
+        }
+
+        .footer-links h4 {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 15px;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--racing-red);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: #666666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--text-gray);
+        }
+
+        /* Responsive Mobile Layout Breakpoint */
+        @media (max-width: 992px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--bg-dark);
+                flex-direction: column;
+                justify-content: flex-start;
+                gap: 40px;
+                padding-top: 60px;
+                transition: left 0.4s cubic-bezier(0.1, 1, 0.1, 1);
+                border-top: 1px solid var(--border-color);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                font-size: 20px;
+            }
+
+            .page-banner {
+                padding: 60px 20px 40px 20px;
+            }
+
+            .banner-title {
+                font-size: 32px;
+            }
+
+            .safety-notice-box {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">PRO<span>DRIVER</span></a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="tracks.html" class="nav-link active">Tracks</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="contact.html" class="nav-link cta-nav-btn">Book Experience</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-banner">
+            <h1 class="banner-title">The Pro <span>Speedways</span></h1>
+            <p class="banner-subtitle">We run operations across premium oval tracks specifically chosen to safely handle real stock car speed diagnostics.</p>
+        </section>
+
+        <section class="section-padding">
+            <div class="tracks-grid">
+                
+                <div class="track-card">
+                    <div class="track-img-placeholder">
+                        <span class="track-badge">Tri-Oval</span>
+                        <div class="track-layout-icon">⬭</div>
+                    </div>
+                    <div class="track-content">
+                        <h3 class="track-name">Daytona International Oval</h3>
+                        <p class="track-location">Daytona Beach, Florida</p>
+                        <p class="track-desc">The ultimate cathedral of speed. Features intense structural banking that pulls your car through curves with immense gravitational force.</p>
+                        <div class="track-specs">
+                            <div class="track-spec-box">
+                                <p class="label">Track Length</p>
+                                <p class="value">2.5 Miles</p>
+                            </div>
+                            <div class="track-spec-box">
+                                <p class="label">Turn Banking</p>
+                                <p class="value">31 Degrees</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track-action">
+                        <a href="contact.html" class="track-btn">Select Track</a>
+                    </div>
+                </div>
+
+                <div class="track-card">
+                    <div class="track-img-placeholder">
+                        <span class="track-badge">Super Speedway</span>
+                        <div class="track-layout-icon">⬭</div>
+                    </div>
+                    <div class="track-content">
+                        <h3 class="track-name">Talladega Run Circuit</h3>
+                        <p class="track-location">Lincoln, Alabama</p>
+                        <p class="track-desc">The biggest and wildest track on our schedule. Known for its extra-wide backstretch, perfect for high-speed passing courses.</p>
+                        <div class="track-specs">
+                            <div class="track-spec-box">
+                                <p class="label">Track Length</p>
+                                <p class="value">2.66 Miles</p>
+                            </div>
+                            <div class="track-spec-box">
+                                <p class="label">Turn Banking</p>
+                                <p class="value">33 Degrees</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track-action">
+                        <a href="contact.html" class="track-btn">Select Track</a>
+                    </div>
+                </div>
+
+                <div class="track-card">
+                    <div class="track-img-placeholder">
+                        <span class="track-badge">Short Track</span>
+                        <div class="track-layout-icon">◯</div>
+                    </div>
+                    <div class="track-content">
+                        <h3 class="track-name">Bristol Thunder Bowl</h3>
+                        <p class="track-location">Bristol, Tennessee</p>
+                        <p class="track-desc">A fast, aggressive colosseum layout. Short straightaways and continuous high banking mean you're constantly fighting G-forces.</p>
+                        <div class="track-specs">
+                            <div class="track-spec-box">
+                                <p class="label">Track Length</p>
+                                <p class="value">0.533 Miles</p>
+                            </div>
+                            <div class="track-spec-box">
+                                <p class="label">Turn Banking</p>
+                                <p class="value">26 Degrees</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track-action">
+                        <a href="contact.html" class="track-btn">Select Track</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="safety-notice-box">
+                <div class="notice-icon">⚠️</div>
+                <div class="notice-text">
+                    <h4>Important Student Dynamic Note</h4>
+                    <p>Track availability updates dynamically based on regional scheduling and track maintenance operations. Your package reservation remains valid across all active speedway programs of equal Tier metrics.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>PRO<span>DRIVER</span></h3>
+                <p>Building specialized performance programs that open track access lanes for aspiring enthusiasts and student drivers alike.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="tracks.html">Tracks</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Book Session</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Tracks</h4>
+                <ul>
+                    <li><a href="tracks.html">Daytona Track Area</a></li>
+                    <li><a href="tracks.html">Talladega Run</a></li>
+                    <li><a href="tracks.html">Bristol Speedway</a></li>
+                    <li><a href="tracks.html">Charlotte Oval</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Hub</a></li>
+                    <li><a href="about.html">Safety Directives</a></li>
+                    <li><a href="contact.html">FAQ System</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Pro Driver NASCAR Experience. All track rules enforced.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Protocol</a>
+                <a href="#">Terms of Use</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
